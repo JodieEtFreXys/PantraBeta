@@ -7,6 +7,8 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <div class="text">
+        Just a test
+    </div>
 </body>
 </html>
