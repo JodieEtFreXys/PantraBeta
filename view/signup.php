@@ -1,8 +1,13 @@
 <?php
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        
-    }
+  session_start();
+
+  include ('../controller/inputSanitize.php');
+  include ('../controller/authController.php');
+
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    
+  }
 
 ?>
 
@@ -16,19 +21,24 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="login-card">
-        <img class="logo-pantrana" src="/assets/images/Logo B.svg" alt="">
-        <h2>SIGNUP</h2>
-
-        <form action="" class="login-form">
-            <input type="text" placeholder="Name" name="username">
-            <input type="text" placeholder="Email" name="email">
-            <input type="text" placeholder="City" name="city">
-            <input type="text" placeholder="Country" name="country">
-            <input type="text" placeholder="Password" name="password">
-            <input type="text" placeholder="Confirm Password" name="confPassword">
-            <button class="login-btn" type="submit">REGISTER</button>
-        </form>
+    <div class="login-page">
+        <div class="form">
+          <div class="login">
+            <div class="login-header">
+              <h3>Register</h3>
+              <p>Please enter your credentials to login.</p>
+            </div>
+          </div>
+          <form class="login-form" method="POST">
+            <input type="text" placeholder="Username" name="username"/>
+            <input type="text" placeholder="Email" name="name"/>
+            <input type="text" placeholder="City" name="city"/>
+            <input type="text" placeholder="Country" name="country"/>
+            <input type="password" placeholder="Password" name="password"/>
+            <input type="password" placeholder="Confirm Password" name="confPassword"/>
+            <button type="submit">REGISTER</button>
+          </form>
+        </div>
     </div>
 </body>
 </html>

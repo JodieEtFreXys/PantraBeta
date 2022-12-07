@@ -16,17 +16,20 @@
 
 <body>
     <div class="wrapper">
+        <input id="toggler" type="checkbox">
 
-        <img class="logo-dropdown" src="/assets/images/image 9.svg" alt="">
+        <label for="toggler">
+          <img src="/assets/images/image 9.svg" alt="">
+        </label>
 
         <div class="dropdown">
             <a href="">Weekly Analytics</a>
             <a href="">Help</a>
             <a href="">Privacy Policy</a>
             <a href="">About Us</a>
-            <a href="">Login</a>
+            <a href="../view/signup.php">Register</a>
+            <a href="../view/login.php">Login</a>
             <a href="">Logout</a>
-            <a href="">Register</a>
         </div>
     </div>
 
@@ -34,7 +37,15 @@
         <a class="uncurr-page" href="/view/main.php">Stock</a>
         <a class="uncurr-page" href="/view/shopList.php">Shopping List</a>
         <a class="uncurr-page" href="/view/recipe.php">Recipe</a>
-        <a class="curr-page" href="/view/expired.php">Expired</a>
+        <a class="expired" href="/view/expired.php">Expired</a>
+    </div>
+
+    <div class="header-expired">
+        <p>Expired</p>
+    </div>
+
+    <div class="body">
+        
     </div>
 </body>
 </html>

@@ -1,6 +1,7 @@
 <?php
 
     include ('../controller/function.php');
+    include ('../controller/inputSanitize.php');
     include ('../model/dbQuery.php');
 
 
@@ -16,14 +17,23 @@
                 $userData = mysqli_fetch_assoc($result);
 
                 if ($password == $userData['password']) {
-                    //Maka Login
+                    $_SESSION['userID'] = $userData['userID'];
+
+                    die;
+                    header('Location: ../view/main.php');
                 }
             }
+
+            die;
+            header('Location: ../view/login.php');
         }
+
+        die;
+        header('Location: ../view/login.php');
     }
 
-    function singupUser ($conn, $name, $email, $city, $country, $password, $confPassword) {
-       if (!canUserSignup($name, $email, $city, $country, $password, $confPassword)) {
+    function singupUser ($conn, $username, $email, $city, $country, $password, $confPassword) {
+       if (!canUserSignup($username, $email, $city, $country, $password, $confPassword)) {
         //Gagal   
         die;
        }
@@ -35,7 +45,7 @@
 
        $password = hashString($password);
        $signupQuery = $dbQuery->getSignupQuery()
-       ."('$name', '$email', '$city', '$country', '$password')";
+       ."('$username', '$email', '$city', '$country', '$password')";
 
        $result = mysqli_query($conn, $signupQuery);
        if ($result) {
@@ -43,16 +53,28 @@
        }
     }
 
-    function canUserSignup ($name, $email, $city, $country, $password, $confPassword) {
+    function canUserSignup ($username, $email, $city, $country, $password, $confPassword) {
         if (
-            !empty($name) &&
+            !empty($username) &&
             !empty($email) &&
             !empty($city) &&
             !empty($country) &&
             !empty($password) &&
             !empty($confPassword)
            ) {
-            return true;
+            if (
+                validateUsername($_POST['username']) &&
+                sanitizeEmail($_POST['email']) &&
+                validatePlace($_POST['city']) &&
+                validatePlace($_POST['country']) &&
+                validatePassword($_POST['password']) &&
+                validatePassword($_POST['confPassword']) &&
+                $_POST['password'] == $_POST['confPassword']
+              ) {
+                return true;
+              }
+
+              return false;
            }
 
         return false;

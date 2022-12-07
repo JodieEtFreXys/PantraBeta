@@ -31,9 +31,37 @@
         }
     }
 
-    function sanitizeString ($string) {
+    function sanitizeHtmlTag ($string) {
         $result = htmlspecialchars($string, ENT_QUOTES);
 
         return $result;
+    }
+
+    function validateUsername ($username) {
+        $result = sanitizeHtmlTag($username);
+
+        if (sanitizeUsername($result)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    function validatePlace ($place) {
+        $result = sanitizeHtmlTag($place);
+
+        if (sanitizePlace($result)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    function validatePassword ($password) {
+        if (sanitizeHtmlTag($password) == $password) {
+            return true;
+        }
+
+        return false;
     }
 ?>
