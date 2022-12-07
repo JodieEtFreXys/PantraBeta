@@ -37,5 +37,9 @@
         <a class="uncurr-page" href="/view/recipe.php">Recipe</a>
         <a class="uncurr-page" href="/view/expired.php">Expired</a>
     </div>
+
+    <div class="list-stock">
+        
+    </div>
 </body>
 </html>

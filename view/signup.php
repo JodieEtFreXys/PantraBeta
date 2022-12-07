@@ -1,3 +1,11 @@
+<?php
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +18,7 @@
 <body>
     <div class="login-card">
         <img class="logo-pantrana" src="/assets/images/Logo B.svg" alt="">
-        <h2>LOGIN</h2>
+        <h2>SIGNUP</h2>
 
         <form action="" class="login-form">
             <input type="text" placeholder="Name" name="username">
