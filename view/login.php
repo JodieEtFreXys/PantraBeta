@@ -1,6 +1,12 @@
 <?php
 
+    session_start();
+
+    include ('../model/connection.php');
     
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        
+    }
 
 ?>
 
