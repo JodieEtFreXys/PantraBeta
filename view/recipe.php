@@ -1,7 +1,10 @@
 <?php
 
-    
+    session_start();
 
+    include ("../model/connection.php");
+    include ("../model/dbQuery.php");
+    $dbName = 'pantrana';
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +48,22 @@
     </div>
 
     <div class="body">
-        
+        <table class="table-header">
+            <thead>
+                <tr>
+                <th>Ingredients</th>
+                <th>Cooking Method</th>
+                <tr>
+            <thead>
+            <tbody>
+                <tr>
+                    <td data-title="ingredients"><p><?php echo $row["ingredients"] ?></p></td>
+                    <td data-title="cookMethod"><p><?php echo $row["cookMethod"] ?></p></td>
+                </tr>
+            </tbody>
+        <table>
+    </div>
+
     </div>
 </body>
 </html>
