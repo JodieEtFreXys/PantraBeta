@@ -2,8 +2,7 @@
 
     session_start();
 
-    include ("../model/connection.php");
-    include ("../model/dbQuery.php");
+    include_once ("../model/connection.php");
     $dbName = 'pantrana';
 ?>
 
@@ -26,13 +25,21 @@
         </label>
 
         <div class="dropdown">
-            <a href="">Weekly Analytics</a>
-            <a href="">Help</a>
-            <a href="">Privacy Policy</a>
-            <a href="">About Us</a>
-            <a href="../view/signup.php">Register</a>
-            <a href="../view/login.php">Login</a>
-            <a href="">Logout</a>
+            <?php
+                if (!isset($_SESSION['userID'])) {
+                    echo '<a href="">Helps</a>';
+                    echo '<a href="">Privacy Policy</a>';
+                    echo '<a href="">About Us</a>';
+                    echo '<a href="../view/signup.php">Register</a>';
+                    echo '<a href="../view/login.php">Login</a>';
+                } else {
+                    echo '<a href="">Weekly Analytics</a>';
+                    echo '<a href="">Helps</a>';
+                    echo '<a href="">Privacy Policy</a>';
+                    echo '<a href="">About Us</a>';
+                    echo '<a href="../controller/userLogout.php">Logout</a>';
+                }
+            ?>
         </div>
     </div>
 
@@ -44,9 +51,18 @@
     </div>
 
     <div class="header-recipe">
-        <p>Recipe</p>
+        <p>
+            <?php
+                if (!isset($_SESSION['userID'])) {
+                    echo 'Login to See Recipe!';
+                } else {
+                    echo $_SESSION['username']."'s Recipe";
+                }
+            ?>
+        </p>
     </div>
-
+    <!-- Still error here -->
+    <!-- TODO: Finish it -->
     <div class="body">
         <table class="table-header">
             <thead>

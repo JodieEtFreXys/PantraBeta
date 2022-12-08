@@ -4,9 +4,14 @@
     font-family: 'Roboto Condensed', sans-serif;
 }
 
+.logo-pantrana {
+  width: 90%;
+}
+
 header .header{
   background-color: #fff;
   height: 45px;
+  place-items: center;
 }
 header a img{
   width: 134px;
@@ -21,8 +26,10 @@ margin-top: 4px;
   margin-top: -31px;
 margin-bottom: 26px;
 }
+
 .form {
   position: relative;
+  place-items: center;
   z-index: 1;
   background: #FFFFFF;
   max-width: 360px;
@@ -44,8 +51,7 @@ margin-bottom: 26px;
 .form button {
   text-transform: uppercase;
   outline: 0;
-  background-color: #328f8a;
-  background-image: linear-gradient(45deg,#328f8a,#08ac4b);
+  background-color: #2e2e2e;
   background-size: cover;
   background-repeat: no-repeat;
   width: 100%;
@@ -60,10 +66,10 @@ margin-bottom: 26px;
 .form .message {
   margin: 15px 0 0;
   color: #b3b3b3;
-  font-size: 12px;
+  font-size: 17px;
 }
 .form .message a {
-  color: #4CAF50;
+  color: #2e2e2e;
   text-decoration: none;
 }
 
@@ -75,8 +81,5 @@ margin-bottom: 26px;
 }
 
 body {
-  background-color: #090c0c;
-  background-image: linear-gradient(45deg,#328f8a,#08ac4b);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background-image: url(/assets/images/Sprinkle.svg);
 }

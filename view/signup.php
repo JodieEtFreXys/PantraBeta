@@ -2,11 +2,12 @@
 
   session_start();
 
-  include ('../controller/inputSanitize.php');
-  include ('../controller/authController.php');
+  include_once ('../controller/authController.php');
+  include_once ('../model/connection.php');
 
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    
+      singupUser($conn, $_POST['username'], $_POST['email'], $_POST['city'], 
+      $_POST['country'], $_POST['password'], $_POST['confPassword']);
   }
 
 ?>
@@ -25,18 +26,26 @@
         <div class="form">
           <div class="login">
             <div class="login-header">
+              <img src="../assets/images/image 9.svg" alt="" class="logo-pantrana">
               <h3>Register</h3>
-              <p>Please enter your credentials to login.</p>
+              <p>Please enter the form below.</p>
+              <?php
+                  if (isset($_SESSION['error'])) {
+                      echo $_SESSION['error'];
+                      unset($_SESSION['error']);
+                  } 
+              ?>
             </div>
           </div>
           <form class="login-form" method="POST">
             <input type="text" placeholder="Username" name="username"/>
-            <input type="text" placeholder="Email" name="name"/>
+            <input type="text" placeholder="Email" name="email"/>
             <input type="text" placeholder="City" name="city"/>
             <input type="text" placeholder="Country" name="country"/>
             <input type="password" placeholder="Password" name="password"/>
             <input type="password" placeholder="Confirm Password" name="confPassword"/>
             <button type="submit">REGISTER</button>
+            <p class="message">Already have an account? <a href="../view/login.php">Login</a></p>
           </form>
         </div>
     </div>

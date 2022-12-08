@@ -1,55 +1,103 @@
 <?php
 
-    include ('../controller/function.php');
-    include ('../controller/inputSanitize.php');
-    include ('../model/dbQuery.php');
-
+    include_once ('../controller/function.php');
+    include_once ('../controller/inputValidation.php');
 
     function checkUserLogin ($conn, $username, $password) {
-        $dbQuery = new Query();
-
         if (!empty($username) && !empty($password)) {
-            $password = hashString($password);
-            $loginQuery = $dbQuery->getLoginQuery.$username;
 
-            $result = mysqli_query($conn, $loginQuery);
-            if ($result) {
-                $userData = mysqli_fetch_assoc($result);
+            if (!validateString($username)) {
 
-                if ($password == $userData['password']) {
-                    $_SESSION['userID'] = $userData['userID'];
-
-                    die;
-                    header('Location: ../view/main.php');
-                }
+                $_SESSION['error'] = 'Please enter valid credentials';
+                header('Location: ../view/login.php');
+                die;
             }
 
-            die;
-            header('Location: ../view/login.php');
-        }
+            $password = hashString($password);
+            $loginQuery = "SELECT * FROM user WHERE username = '$username'";
+            
+            $result = mysqli_query($conn, $loginQuery);
+            $userData = mysqli_fetch_assoc($result);
+            
+            if ($userData) {
 
-        die;
+                if ($password == $userData['password']) {
+
+                    $_SESSION['username'] = $userData['username'];
+                    $_SESSION['userID'] = $userData['userID'];
+                    
+                    header('Location: ../view/main.php');
+                    die;
+                } else {
+
+                    $_SESSION['error'] = 'Please enter valid credentials';
+                    header('Location: ../view/login.php');
+                    die;
+                }
+            } else {
+
+                $_SESSION['error'] = 'Please enter valid credentials';
+                header('Location: ../view/login.php');
+                die;
+            }
+        }
+        
+        $_SESSION['error'] = 'Please do not empty credentials';
         header('Location: ../view/login.php');
+        die;
     }
 
     function singupUser ($conn, $username, $email, $city, $country, $password, $confPassword) {
        if (!canUserSignup($username, $email, $city, $country, $password, $confPassword)) {
-        //Gagal   
-        die;
+
+            $_SESSION['error'] = 'Please do not empty the credential';
+            header('Location: ../view/signup.php');
+            die;
+       }
+
+       if (!validateEmail($email)) {
+
+            $_SESSION['error'] = 'Please enter valid email';
+            header('Location: ../view/signup.php');
+            die;
+       }
+
+       if (!validateString($username)) {
+
+            $_SESSION['error'] = 'Username can only consist of letter and number';
+            header('Location: ../view/signup.php');
+            die;
+       }
+
+       if (!validateString($city)) {
+            $_SESSION['error'] = 'Please enter a valid city';
+            header('Location: ../view/signup.php');
+            die;
+       }
+
+       if (!validateString($country)) {
+            $_SESSION['error'] = 'Please enter a valid country';
+            header('Location: ../view/signup.php');
+            die;
        }
 
        if ($password != $confPassword) {
-        die;
+            $_SESSION['error'] = 'Password does not match';
+            header('Location: ../view/signup.php');
+            die;
        }
-       $dbQuery = new Query();
 
        $password = hashString($password);
-       $signupQuery = $dbQuery->getSignupQuery()
-       ."('$username', '$email', '$city', '$country', '$password')";
+       $signupQuery = "INSERT INTO user (username, email, password, city, country) VALUES 
+       ('$username', '$email', '$password', '$city', '$country')";
 
        $result = mysqli_query($conn, $signupQuery);
        if ($result) {
-            //TODO: Header
+            header('Location: ../view/main.php');
+            die;
+       } else {
+            header('Location: ../view/signup.php');
+            die;
        }
     }
 
@@ -62,19 +110,7 @@
             !empty($password) &&
             !empty($confPassword)
            ) {
-            if (
-                validateUsername($_POST['username']) &&
-                sanitizeEmail($_POST['email']) &&
-                validatePlace($_POST['city']) &&
-                validatePlace($_POST['country']) &&
-                validatePassword($_POST['password']) &&
-                validatePassword($_POST['confPassword']) &&
-                $_POST['password'] == $_POST['confPassword']
-              ) {
-                return true;
-              }
-
-              return false;
+              return true;
            }
 
         return false;

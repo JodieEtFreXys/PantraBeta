@@ -2,16 +2,10 @@
 
   session_start();
   
-  // include ('../model/connection.php');
-  include ('../controller/inputSanitize.php');
-  include ('../controller/authController.php');
+  include_once ('../model/connection.php');
+  include_once ('../controller/authController.php');
   
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-      if (!sanitizeUsername($_POST['username'])) {
-          die;
-          header('Location: ../view/login.php');
-      }
-      
       checkUserLogin($conn, $_POST['username'], $_POST['password']);
   }
 
@@ -31,8 +25,15 @@
       <div class="form">
         <div class="login">
           <div class="login-header">
+            <img src="../assets/images/image 9.svg" alt="" class="logo-pantrana">
             <h3>LOGIN</h3>
             <p>Please enter your credentials to login.</p>
+            <?php
+              if (isset($_SESSION['error'])) {
+                echo $_SESSION['error'];
+                unset($_SESSION['error']);
+              }  
+            ?>
           </div>
         </div>
         <form class="login-form" method="POST">

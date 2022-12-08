@@ -1,6 +1,6 @@
 <?php
 
-    
+    session_start();
 
 ?>
 
@@ -23,13 +23,21 @@
         </label>
 
         <div class="dropdown">
-            <a href="">Weekly Analytics</a>
-            <a href="">Help</a>
-            <a href="">Privacy Policy</a>
-            <a href="">About Us</a>
-            <a href="../view/signup.php">Register</a>
-            <a href="../view/login.php">Login</a>
-            <a href="">Logout</a>
+            <?php
+                if (!isset($_SESSION['userID'])) {
+                    echo '<a href="">Helps</a>';
+                    echo '<a href="">Privacy Policy</a>';
+                    echo '<a href="">About Us</a>';
+                    echo '<a href="../view/signup.php">Register</a>';
+                    echo '<a href="../view/login.php">Login</a>';
+                } else {
+                    echo '<a href="">Weekly Analytics</a>';
+                    echo '<a href="">Helps</a>';
+                    echo '<a href="">Privacy Policy</a>';
+                    echo '<a href="">About Us</a>';
+                    echo '<a href="../controller/userLogout.php">Logout</a>';
+                }
+            ?>
         </div>
     </div>
 
@@ -41,7 +49,15 @@
     </div>
 
     <div class="header-shop">
-        <p>Shopping List</p>
+        <p>
+            <?php
+                if (!isset($_SESSION['userID'])) {
+                    echo 'Login to See Shopping list!';
+                } else {
+                    echo $_SESSION['username']."'s shopping list";
+                }
+            ?>
+        </p>
     </div>
 
     <div class="body">
