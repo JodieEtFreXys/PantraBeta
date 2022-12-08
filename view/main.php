@@ -62,6 +62,20 @@
     </div>
 
     <div class="body">
+        <table>
+            <thead>
+                <tr>
+                <th>Food Type</th>
+                <th>Expiration Date</th>
+                <tr>
+            <thead>
+            <tbody>
+                <tr>
+                    <td data-title="stockName"><p><?php echo $row["stockName"] ?></p></td>
+                    <td data-title="stockDate"><p><?php echo $row["stockDate"] ?></p></td>
+                </tr>
+            </tbody>
+        <table>
         
     </div>
 </body>
