@@ -106,7 +106,7 @@
 
        $result = mysqli_query($conn, $signupQuery);
        if ($result) {
-            header('Location: ../view/main.php');
+            header('Location: ../view/login.php');
             die;
        } else {
             header('Location: ../view/signup.php');
