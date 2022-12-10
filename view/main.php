@@ -2,6 +2,20 @@
 
     session_start();
 
+    include_once ('../model/connection.php');
+    include_once ('../controller/databaseInsertion.php');
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if (!isset($_SESSION['userID'])) {
+
+            $_SESSION['error'] = 'Please login to insert!';
+            header('Location: ../view/main.php');
+            die;
+        }
+
+        stockInput($conn, $_POST['stockName']);
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -61,22 +75,78 @@
         </p>
     </div>
 
-    <div class="body">
-        <table>
-            <thead>
-                <tr>
-                <th>Food Type</th>
-                <th>Expiration Date</th>
-                <tr>
-            <thead>
-            <tbody>
-                <tr>
-                    <td data-title="stockName"><p><?php echo $row["stockName"] ?></p></td>
-                    <td data-title="stockDate"><p><?php echo $row["stockDate"] ?></p></td>
-                </tr>
-            </tbody>
-        <table>
-        
+    <div class="body-content">
+        <div class="body-card">
+            <h1>Stock Insertion</h1>
+            <div class="alert-message">
+                <?php
+                    if (isset($_SESSION['error'])) {
+                        echo $_SESSION['error'];
+                        unset($_SESSION['error']);
+                    }
+                ?>
+            </div>
+            <div class="success-message">
+                <?php
+                    if (isset($_SESSION['success'])) {
+                        echo $_SESSION['success'];
+                        unset($_SESSION['success']);
+                    }
+                ?>
+            </div>
+            <form action="" class="ingredients-input" method="POST">
+                <section class="input-section">
+                    <div class="input-placeholder">
+                        <h3>Stock Name:</h3>
+                        <textarea name="stockName" cols="60" rows="10" class="input-ingredients"></textarea>
+                    </div>
+                </section>
+
+                <button id="stock-insert-btn" class="btn-insert" type="submit">
+                    INSERT
+                </button>
+            </form>
+        </div>
+
+        <div class="body-card">
+            <h1>Recipe List</h1>
+            <?php
+                if (isset($_SESSION['userID'])) {
+
+                    $userID = $_SESSION['userID'];
+
+                    $query = "SELECT stockdetail.stockName, stockdetail.stockDate FROM stockdetail 
+                    INNER JOIN stockheader ON stockdetail.stockID = stockheader.stockID
+                    WHERE stockheader.userID = '$userID'";
+
+                    $result = mysqli_query($conn, $query);
+
+                    if ($result) {
+                        while ($row = mysqli_fetch_array($result)) {
+                            echo '<div class="card-list">';
+                            echo '<div class="card-header">';
+                            echo '<h3>Stock Name</h3>';
+                            echo '<h3>Stock Date</h3>';
+                            echo '</div>';
+                            echo '<div class="card-content">';
+                            echo '<p>';
+                            echo $row['stockName'];
+                            echo '</p>';
+                            echo '<p id="stock-date-line">';
+                            echo $row['stockDate'];
+                            echo '</p>';
+                            echo '</div>';
+                            echo '</div>';
+                        }
+                    }
+                } else {
+                    echo '<h2>';
+                    echo 'Login to see stock!';
+                    echo '</h2>';
+                }
+            ?>
+        </div>
+    </div>
     </div>
 </body>
 </html>

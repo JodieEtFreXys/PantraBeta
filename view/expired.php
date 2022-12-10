@@ -60,8 +60,43 @@
         </p>
     </div>
 
-    <div class="body">
-        
+    <div class="body-content">
+        <div class="body-card">
+            <h1>WIP</h1>
+            <div class="alert-message">
+                <?php
+                    if (isset($_SESSION['error'])) {
+                        echo $_SESSION['error'];
+                        unset($_SESSION['error']);
+                    }
+                ?>
+            </div>
+            <div class="success-message">
+                <?php
+                    if (isset($_SESSION['success'])) {
+                        echo $_SESSION['success'];
+                        unset($_SESSION['success']);
+                    }
+                ?>
+            </div>
+            <form action="" class="ingredients-input">
+                <section class="input-section">
+                    <div class="input-placeholder">
+                        <h3>WIP:</h3>
+                        <textarea name="ingredients" cols="60" rows="10" class="input-ingredients"></textarea>
+                    </div>
+
+                    <div class="input-placeholder" id="method-placeholder">
+                        <h3>WIP:</h3>
+                        <textarea name="cookingMethod" cols="60" rows="10" class="input-cooking"></textarea>
+                    </div>
+                </section>
+
+                <button id="expired-insert-btn" class="btn-insert" type="submit">
+                    THIS BUTTON DOESN'T DO ANYTHING
+                </button>
+            </form>
+        </div>
     </div>
 </body>
 </html>

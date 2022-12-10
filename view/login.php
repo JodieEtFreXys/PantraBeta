@@ -28,12 +28,14 @@
             <img src="../assets/images/image 9.svg" alt="" class="logo-pantrana">
             <h3>LOGIN</h3>
             <p>Please enter your credentials to login.</p>
+            <div class="alert-message">
             <?php
               if (isset($_SESSION['error'])) {
                 echo $_SESSION['error'];
                 unset($_SESSION['error']);
               }  
             ?>
+            </div>
           </div>
         </div>
         <form class="login-form" method="POST">

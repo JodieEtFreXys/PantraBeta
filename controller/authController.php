@@ -70,19 +70,32 @@
        }
 
        if (!validateString($city)) {
+
             $_SESSION['error'] = 'Please enter a valid city';
             header('Location: ../view/signup.php');
             die;
        }
 
        if (!validateString($country)) {
+
             $_SESSION['error'] = 'Please enter a valid country';
             header('Location: ../view/signup.php');
             die;
        }
 
        if ($password != $confPassword) {
+
             $_SESSION['error'] = 'Password does not match';
+            header('Location: ../view/signup.php');
+            die;
+       }
+
+       $searchQuery = "SELECT * FROM user WHERE username = '$username'";
+       $result = mysqli_query($conn, $searchQuery);
+       $checkData = mysqli_fetch_assoc($result);
+       if ($checkData) {
+        
+            $_SESSION['error'] = 'Username already exist!';
             header('Location: ../view/signup.php');
             die;
        }

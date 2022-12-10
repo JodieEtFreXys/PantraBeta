@@ -29,12 +29,14 @@
               <img src="../assets/images/image 9.svg" alt="" class="logo-pantrana">
               <h3>Register</h3>
               <p>Please enter the form below.</p>
+              <div class="alert-message">
               <?php
                   if (isset($_SESSION['error'])) {
                       echo $_SESSION['error'];
                       unset($_SESSION['error']);
                   } 
               ?>
+              </div>
             </div>
           </div>
           <form class="login-form" method="POST">
