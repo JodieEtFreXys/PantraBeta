@@ -2,6 +2,7 @@
 
 * {
     font-family: 'Roboto Condensed', sans-serif;
+    position: relative;
 }
 
 .wrapper {
@@ -26,6 +27,7 @@ input {
     left: 0;
     background-color: #333;
     height: 800px;
+    z-index: 10;
 }
 
 .dropdown a{
@@ -118,4 +120,94 @@ input:checked ~ .dropdown {
     text-align: center;
     background: rgb(255, 8, 8);
     color: black;
+}
+
+/* .body-content {
+    display: flex;
+    justify-content: center;
+} */
+
+.body-card {
+    text-align: center;
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-radius: 1rem;
+    margin: 10px;
+    padding: 5px;
+}
+
+.input-placeholder {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+    padding: 10px;
+}
+
+.input-placeholder textarea {
+    margin: 10px;
+    padding: 10px;
+}
+
+.btn-insert {
+    padding: 10px;
+    width: 100px;
+    border: 0;
+    border-radius: 1rem;
+    margin: 5px;
+    font-weight: 600;
+}
+
+#recipe-insert-btn {
+    background-color: #08ff0c;
+}
+
+#stock-insert-btn {
+    background-color: #08daff;
+}
+
+#shop-insert-btn {
+    background-color: #eb07a7;
+}
+
+#expired-insert-btn {
+    background-color: #ff0808;
+}
+
+#method-placeholder {
+    right: 18.5px;
+}
+
+.alert-message {
+    color: red;
+}
+
+.success-message {
+    color: green;
+}
+
+.list-card {
+    margin: 10px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.card-list {
+    border: 1px solid black;
+    border-radius: 1rem;
+    margin: 10px;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.card-content {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#stock-date-line {
+    left: 16px;
 }

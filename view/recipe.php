@@ -2,8 +2,19 @@
 
     session_start();
 
-    include_once ("../model/connection.php");
-    $dbName = 'pantrana';
+    include_once ('../model/connection.php');
+    include_once ('../controller/databaseInsertion.php');
+    
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if (!isset($_SESSION['userID'])) {
+
+            $_SESSION['error'] = 'Please login to insert!';
+            header('Location: ../view/recipe.php');
+            die;
+        }
+        
+        recipeInput($conn, $_POST['ingredients'], $_POST['cookingMethod']);
+    }
 ?>
 
 <!DOCTYPE html>
@@ -63,21 +74,82 @@
     </div>
     <!-- Still error here -->
     <!-- TODO: Finish it -->
-    <div class="body">
-        <table class="table-header">
-            <thead>
-                <tr>
-                <th>Ingredients</th>
-                <th>Cooking Method</th>
-                <tr>
-            <thead>
-            <tbody>
-                <tr>
-                    <td data-title="ingredients"><p><?php echo $row["ingredients"] ?></p></td>
-                    <td data-title="cookMethod"><p><?php echo $row["cookMethod"] ?></p></td>
-                </tr>
-            </tbody>
-        <table>
+    <div class="body-content">
+        <div class="body-card">
+            <h1>Recipe Insertion</h1>
+            <div class="alert-message">
+                <?php
+                    if (isset($_SESSION['error'])) {
+                        echo $_SESSION['error'];
+                        unset($_SESSION['error']);
+                    }
+                ?>
+            </div>
+            <div class="success-message">
+                <?php
+                    if (isset($_SESSION['success'])) {
+                        echo $_SESSION['success'];
+                        unset($_SESSION['success']);
+                    }
+                ?>
+            </div>
+            <form action="" class="ingredients-input" method="POST">
+                <section class="input-section">
+                    <div class="input-placeholder">
+                        <h3>Ingredients:</h3>
+                        <textarea name="ingredients" cols="60" rows="10" class="input-ingredients"></textarea>
+                    </div>
+
+                    <div class="input-placeholder" id="method-placeholder">
+                        <h3>Cooking method:</h3>
+                        <textarea name="cookingMethod" cols="60" rows="10" class="input-cooking"></textarea>
+                    </div>
+                </section>
+
+                <button id="recipe-insert-btn" class="btn-insert" type="submit">
+                    INSERT
+                </button>
+            </form>
+        </div>
+
+        <div class="body-card">
+            <h1>Recipe List</h1>
+            <?php
+                if (isset($_SESSION['userID'])) {
+
+                    $userID = $_SESSION['userID'];
+
+                    $query = "SELECT recipe.ingredients, recipe.cookMethod FROM recipe 
+                    INNER JOIN recipeheader ON recipe.recipeID = recipeheader.recipeID
+                    WHERE recipeheader.userID = '$userID'";
+
+                    $result = mysqli_query($conn, $query);
+
+                    if ($result) {
+                        while ($row = mysqli_fetch_array($result)) {
+                            echo '<div class="card-list">';
+                            echo '<div class="card-header">';
+                            echo '<h3>Ingredient</h3>';
+                            echo '<h3>Cooking Method</h3>';
+                            echo '</div>';
+                            echo '<div class="card-content">';
+                            echo '<p>';
+                            echo $row['ingredients'];
+                            echo '</p>';
+                            echo '<p>';
+                            echo $row['cookMethod'];
+                            echo '</p>';
+                            echo '</div>';
+                            echo '</div>';
+                        }
+                    }
+                } else {
+                    echo '<h2>';
+                    echo 'Login to see recipe!';
+                    echo '</h2>';
+                }
+            ?>
+        </div>
     </div>
 
     </div>
